@@ -1,0 +1,14 @@
+##############################
+# Parametros passados de execução (LOCAL)
+##############################
+variable "aws_account_id" {
+  default = "<aws_account_id>"
+}
+
+terraform {
+  backend "s3" {
+    bucket = "fiap-backend-tf-<aws_account_id>"
+    key    = "backend/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
