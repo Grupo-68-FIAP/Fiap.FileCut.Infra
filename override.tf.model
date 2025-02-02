@@ -5,10 +5,18 @@ variable "aws_account_id" {
   default = "<aws_account_id>"
 }
 
+variable "aws_access_key" {
+  default = "<aws_access_key>"
+}
+
+variable "aws_secret_key" {
+  default = "<aws_secret_key>"
+}
+
 terraform {
   backend "s3" {
-    bucket = "fiap-backend-tf-<aws_account_id>"
-    key    = "backend/terraform.tfstate"
-    region = "us-east-1"
+    bucket  = "fiap-backend-tf-<aws_account_id>"
+    key     = "backend/terraform.tfstate"
+    region  = "us-east-1"
   }
 }
