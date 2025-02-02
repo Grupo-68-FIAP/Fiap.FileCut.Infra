@@ -38,3 +38,13 @@ variable "aws_eks_authentication_mode" {
   default     = "API_AND_CONFIG_MAP"
   description = "Especifica a configuração de acesso desejada, incluindo tanto a API quanto um mapa de configuração."
 }
+
+variable "aws_access_key" {
+  type = string
+  description = "Chave de acesso para uso no bucket S3"
+}
+
+variable "aws_secret_key" {
+  type = string
+  description = "Chave secreta para uso no bucket S3"
+}
