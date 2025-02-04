@@ -52,14 +52,21 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: keycloak-db-secret
-                  key: kc-admin-password      
-          command: ["/opt/keycloak/bin/kc.sh", "start-dev"]
+                  key: kc-admin-password
+          # command: ["/opt/keycloak/bin/kc.sh", "start-dev"]
           ports:
             - containerPort: 8080
               name: http
           volumeMounts:
             - name: keycloak-data
               mountPath: /opt/keycloak/data
+            - name: realm-config
+              mountPath: /opt/keycloak/data/import
+              readOnly: true
+          args: ["start-dev", "--import-realm"]
       volumes:
         - name: keycloak-data
           emptyDir: {}
+        - name: realm-config
+          configMap:
+            name: keycloak-realm-config
