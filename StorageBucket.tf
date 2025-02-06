@@ -35,9 +35,9 @@ resource "kubernetes_secret" "s3_bucket_secret" {
   }
 
   data = {
-    s3_bucket_name = base64encode(aws_s3_bucket.file_storage_bucket.bucket)
-    s3_access_key  = base64encode("${var.aws_access_key}")  # Replace with your AWS access key
-    s3_secret_key  = base64encode("${var.aws_secret_key}")  # Replace with your AWS secret key
+    s3_bucket_name = aws_s3_bucket.file_storage_bucket.bucket
+    s3_access_key  = "${var.aws_access_key}"
+    s3_secret_key  = "${var.aws_secret_key}"
   }
 
   depends_on = [
