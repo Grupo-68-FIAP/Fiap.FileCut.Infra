@@ -12,9 +12,9 @@ resource "aws_security_group" "sg" {
   }
 
   ingress {
-    description = "SQLServer access"
-    from_port   = 1433
-    to_port     = 1433
+    description = "Postgres access"
+    from_port   = 5432
+    to_port     = 5432
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
