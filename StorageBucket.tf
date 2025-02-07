@@ -38,6 +38,7 @@ resource "kubernetes_secret" "s3_bucket_secret" {
     s3_bucket_name = aws_s3_bucket.file_storage_bucket.bucket
     s3_access_key  = "${var.aws_access_key}"
     s3_secret_key  = "${var.aws_secret_key}"
+    s3_region      = "${var.aws_region}"
   }
 
   depends_on = [
