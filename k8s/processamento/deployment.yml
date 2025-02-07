@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filecutgestao
+  labels:
+    app: filecutgestao
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: filecutgestao
+  template:
+    metadata:
+      labels:
+        app: filecutgestao
+    spec:
+      containers:
+        - name: filecutgestao-container
+          image: ghcr.io/grupo-68-fiap/fiapfilecut/processamento:latest
+          env:
+            - name: RABBITMQ_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-credentials
+                  key: RABBITMQ_CONNECTION_STRING
+            - name: OPENID_AUTHORITY
+              valueFrom:
+                secretKeyRef:
+                  name: cognito-secrets
+                  key: OPENID_AUTHORITY
+            - name: OPENID_AUDIENCE
+              valueFrom:
+                secretKeyRef:
+                  name: cognito-secrets
+                  key: OPENID_AUDIENCE
+            - name: OPENID_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: cognito-secrets
+                  key: OPENID_SECRET
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 5m
+            limits:
+              memory: 256Mi
+              cpu: 200m
