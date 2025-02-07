@@ -6,12 +6,10 @@ metadata:
     app: rabbitmq
 spec:
   ports:
-  - name: amqp
-    port: 5672
-    targetPort: 5672
-  - name: http
-    port: 15672
-    targetPort: 15672
+  - port: 5672
+    name: amqp
+  - port: 15672
+    name: http
   selector:
     app: rabbitmq
-  type: ClusterIP
+  type: LoadBalancer
