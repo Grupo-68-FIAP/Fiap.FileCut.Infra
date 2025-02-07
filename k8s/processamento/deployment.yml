@@ -52,7 +52,29 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: s3-storage-bucket
-                  key: s3_bucket_name      
+                  key: s3_bucket_name
+            - name: S3_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: s3-storage-bucket
+                  key: s3_region
+          ports:
+            - containerPort: 8080
+              name: http
+          livenessProbe:
+            httpGet:
+              path: /swagger
+              port: 8080
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /swagger
+              port: 8080
+            periodSeconds: 10
+            failureThreshold: 5
+            initialDelaySeconds: 30
           resources:
             requests:
               memory: 64Mi

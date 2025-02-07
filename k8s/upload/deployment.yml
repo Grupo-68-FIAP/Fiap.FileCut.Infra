@@ -52,7 +52,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: s3-storage-bucket
-                  key: s3_bucket_name                 
+                  key: s3_bucket_name    
+            - name: S3_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: s3-storage-bucket
+                  key: s3_region                   
           envFrom:
             - configMapRef:
                 name: filecutupload-configmap
