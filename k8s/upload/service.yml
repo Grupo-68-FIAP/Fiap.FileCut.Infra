@@ -1,0 +1,15 @@
+apiVersion: v1 # Service da API do tipo LoadBalancer
+kind: Service
+metadata:
+  labels:
+      app: filecutupload-svc
+  name: filecutupload-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: filecutupload
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
