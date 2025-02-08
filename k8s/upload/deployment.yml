@@ -38,22 +38,22 @@ spec:
                 secretKeyRef:
                   name: cognito-secrets
                   key: OPENID_SECRET
-            - name: S3_ACCESS_KEY
+            - name: AWS_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
                   name: s3-storage-bucket
                   key: s3_access_key
-            - name: S3_SECRET_KEY
+            - name: AWS_SECRET_KEY
               valueFrom:
                 secretKeyRef:
                   name: s3-storage-bucket
                   key: s3_secret_key
-            - name: S3_BUCKET_NAME
+            - name: AWS_BUCKET_NAME
               valueFrom:
                 secretKeyRef:
                   name: s3-storage-bucket
-                  key: s3_bucket_name    
-            - name: S3_REGION
+                  key: s3_bucket_name
+            - name: AWS_REGION
               valueFrom:
                 secretKeyRef:
                   name: s3-storage-bucket
