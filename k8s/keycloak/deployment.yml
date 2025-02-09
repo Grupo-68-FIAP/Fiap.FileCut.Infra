@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:25.0
+          env:
+            - name: KEYCLOAK_DB_VENDOR
+              value: POSTGRES
+            - name: KEYCLOAK_DB_ADDR
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-db-secret
+                  key: db-host
+            - name: KEYCLOAK_DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-db-secret
+                  key: db-port
+            - name: KEYCLOAK_DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-db-secret
+                  key: db-name
+            - name: KEYCLOAK_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-db-secret
+                  key: db-user
+            - name: KEYCLOAK_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-db-secret
+                  key: db-password
+            - name: KEYCLOAK_ADMIN
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-db-secret
+                  key: kc-admin
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-db-secret
+                  key: kc-admin-password
+          # command: ["/opt/keycloak/bin/kc.sh", "start-dev"]
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: keycloak-data
+              mountPath: /opt/keycloak/data
+            - name: realm-config
+              mountPath: /opt/keycloak/data/import
+              readOnly: true
+          args: ["start-dev", "--import-realm"]
+      volumes:
+        - name: keycloak-data
+          emptyDir: {}
+        - name: realm-config
+          configMap:
+            name: keycloak-realm-config
